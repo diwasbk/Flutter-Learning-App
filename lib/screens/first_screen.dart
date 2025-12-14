@@ -5,6 +5,17 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text("WhatsApp", style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+        ),),
+        actions: [
+          Icon(Icons.search, color: Colors.white,)
+        ],
+      ),
+    );
   }
 }
