@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // Immutable State/Provider
 final appBarProvider = Provider<String>((ref) {
@@ -14,6 +15,11 @@ final providerDefinationProvider = Provider<String>((ref) {
 // Immutable State/Provider
 final stateProviderdefinationProvider = Provider<String>((ref) {
   return 'State Provider is ideal for managing simple state like counters, toggles, or form inputs, providing a straightforward way to read and update the state.';
+});
+
+// Mutable State/Provider
+final counterProvider = StateProvider<int>((ref) {
+  return 1;
 });
 
 class ProviderStateProviderScreen extends ConsumerWidget {
@@ -101,7 +107,7 @@ class ProviderStateProviderScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        '0',
+                        ref.watch(counterProvider).toString(),
                         style: Theme.of(
                           context,
                         ).textTheme.displayLarge?.copyWith(color: Colors.white),
@@ -119,21 +125,27 @@ class ProviderStateProviderScreen extends ConsumerWidget {
         children: [
           FloatingActionButton(
             heroTag: 'decrement',
-            onPressed: () {},
+            onPressed: () {
+              ref.read(counterProvider.notifier).state--;
+            },
             backgroundColor: Colors.red,
             child: const Icon(Icons.remove),
           ),
           const SizedBox(width: 16),
           FloatingActionButton(
             heroTag: 'reset',
-            onPressed: () {},
+            onPressed: () {
+              ref.read(counterProvider.notifier).state = 1;
+            },
             backgroundColor: Colors.grey,
             child: const Icon(Icons.refresh),
           ),
           const SizedBox(width: 16),
           FloatingActionButton(
             heroTag: 'increment',
-            onPressed: () {},
+            onPressed: () {
+              ref.read(counterProvider.notifier).state++;
+            },
             backgroundColor: Colors.green,
             child: const Icon(Icons.add),
           ),
