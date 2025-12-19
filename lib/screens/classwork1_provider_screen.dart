@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
-class Classwork1ProviderScreen extends StatelessWidget {
+// Immutable Provider
+final appBarProvider = Provider<String>((ref) {
+  return "Classwork 1 - Provider";
+});
+
+// Controllers to get values from the input fields
+TextEditingController number1Controller = TextEditingController();
+TextEditingController number2Controller = TextEditingController();
+
+// Mutable Provider
+final operatorResultProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+class Classwork1ProviderScreen extends ConsumerWidget {
   const Classwork1ProviderScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -32,7 +48,7 @@ class Classwork1ProviderScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Classwork 1 - Provider',
+                      ref.read(appBarProvider),
                       style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(
                             color: Colors.white,
@@ -45,6 +61,7 @@ class Classwork1ProviderScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
+                  controller: number1Controller,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -69,6 +86,7 @@ class Classwork1ProviderScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
+                  controller: number2Controller,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -96,7 +114,11 @@ class Classwork1ProviderScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          final num1 = int.parse(number1Controller.text);
+                          final num2 = int.parse(number2Controller.text);
+                          ref.read(operatorResultProvider.notifier).state = num1 + num2;
+                        },
                         icon: const Icon(Icons.add),
                         label: const Text('Add'),
                         style: ElevatedButton.styleFrom(
@@ -112,7 +134,11 @@ class Classwork1ProviderScreen extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          final num1 = int.parse(number1Controller.text);
+                          final num2 = int.parse(number2Controller.text);
+                          ref.read(operatorResultProvider.notifier).state = num1-num2;
+                        },
                         icon: const Icon(Icons.remove),
                         label: const Text('Subtract'),
                         style: ElevatedButton.styleFrom(
@@ -135,7 +161,11 @@ class Classwork1ProviderScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          final num1 = int.parse(number1Controller.text);
+                          final num2 = int.parse(number2Controller.text);
+                          ref.read(operatorResultProvider.notifier).state = num1*num2;
+                        },
                         icon: const Icon(Icons.close),
                         label: const Text('Multiply'),
                         style: ElevatedButton.styleFrom(
@@ -151,7 +181,11 @@ class Classwork1ProviderScreen extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          final num1 = int.parse(number1Controller.text);
+                          final num2 = int.parse(number2Controller.text);
+                          ref.read(operatorResultProvider.notifier).state = num1 ~/ num2;
+                        },
                         icon: const Icon(Icons.percent),
                         label: const Text('Divide'),
                         style: ElevatedButton.styleFrom(
@@ -185,7 +219,7 @@ class Classwork1ProviderScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '0',
+                          ref.watch(operatorResultProvider).toString(),
                           style: Theme.of(context).textTheme.displayMedium
                               ?.copyWith(color: Colors.white),
                         ),
