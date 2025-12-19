@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Immutable State/Provider
 final appBarProvider = Provider<String>((ref) {
   return "Provider & StateProviders";
 });
 
+// Immutable State/Provider
 final providerDefinationProvider = Provider<String>((ref) {
   return 'Provider is used to expose a value, while StateProvider is a specialized provider that allows you to manage and update a simple piece of state.';
 });
 
+// Immutable State/Provider
 final stateProviderdefinationProvider = Provider<String>((ref) {
   return 'State Provider is ideal for managing simple state like counters, toggles, or form inputs, providing a straightforward way to read and update the state.';
 });
 
-class ProviderStateProviderScreen extends StatelessWidget {
+class ProviderStateProviderScreen extends ConsumerWidget {
   const ProviderStateProviderScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -44,17 +47,13 @@ class ProviderStateProviderScreen extends StatelessWidget {
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
                     ),
                     const SizedBox(width: 8),
-                    Consumer(
-                      builder: (context, ref, child) {
-                        return Text(
-                          ref.read(appBarProvider),
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        );
-                      },
+                    Text(
+                      ref.read(appBarProvider),
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -64,17 +63,13 @@ class ProviderStateProviderScreen extends StatelessWidget {
                 margin: const EdgeInsets.all(16.0),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return Text(
-                        ref.read(providerDefinationProvider),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    },
+                  child: Text(
+                    ref.read(providerDefinationProvider),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -86,17 +81,12 @@ class ProviderStateProviderScreen extends StatelessWidget {
                     horizontal: 16.0,
                     vertical: 8.0,
                   ),
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return Text(
-                        ref.read(stateProviderdefinationProvider),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    },
+                  child: Text(
+                    ref.read(stateProviderdefinationProvider),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
