@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NotifierProviderScreen extends StatelessWidget {
+class NotifierProviderScreen extends ConsumerStatefulWidget {
   const NotifierProviderScreen({super.key});
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _NotifierProviderScreenState();
+}
+
+class _NotifierProviderScreenState
+    extends ConsumerState<NotifierProviderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
