@@ -11,6 +11,10 @@ class NotifierProviderScreen extends ConsumerStatefulWidget {
 
 class _NotifierProviderScreenState
     extends ConsumerState<NotifierProviderScreen> {
+  final fNameController = TextEditingController(text: "Diwas");
+  final lNameController = TextEditingController(text: "Bk");
+  final dobController = TextEditingController(text: "1997-01-01");
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
